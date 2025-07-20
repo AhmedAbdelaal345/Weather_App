@@ -18,8 +18,7 @@ class WeatherModel {
   });
 
   factory WeatherModel.fromJson(dynamic data) {
-    var jsonData =
-        data["forecast"]["forecastday"]?.first; // Use ?. to safely access
+    var jsonData = data["forecast"]["forecastday"][0];
     if (jsonData == null) {
       throw Exception("Forecast data not available"); // Handle null case
     }
@@ -27,7 +26,8 @@ class WeatherModel {
       country: data["location"]["name"] ?? "Unknown", // Provide default value
       date: DateTime.parse(data["current"]["last_updated"]),
       temp:
-          jsonData["avgtemp_c"]?.toDouble() ?? 0.0, // Convert to double safely
+          jsonData["day"]["avgtemp_c"]?.toDouble() ??
+          0.0, // Convert to double safely
       maxTemp:
           jsonData["day"]["maxtemp_c"]?.toDouble() ??
           0.0, // Convert to double safely

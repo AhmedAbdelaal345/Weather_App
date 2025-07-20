@@ -10,13 +10,15 @@ class WeatherService {
   Future<WeatherModel?> getWeather({required String cityName}) async {
     WeatherModel? weather;
     try {
-      Uri url = Uri.parse("$baseUrl/forecast.json?key=$apiKey&q=$cityName");
+      Uri url = Uri.parse(
+        "$baseUrl/forecast.json?key=$apiKey &q=$cityName&days=7&aqi=no&alerts=no",
+      );
       http.Response response = await http.get(
         url,
         headers: {'Accept': 'application/json'},
       );
       Map<String, dynamic> data = jsonDecode(response.body);
-      WeatherModel weather = WeatherModel.fromJson(data);
+       weather = WeatherModel.fromJson(data);
     } catch (e) {
       print(e);
     }

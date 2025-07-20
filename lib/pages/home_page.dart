@@ -13,6 +13,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void updateUi(){
+    setState(() {
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
     WeatherModel? weatherData =
@@ -26,7 +31,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SearchPage()),
+                MaterialPageRoute(builder: (context) => SearchPage(updateUi)),
               );
             },
             icon: Icon(Icons.search, color: Colors.white),

@@ -7,7 +7,7 @@ import 'package:weather_app/services/weather_service.dart';
 class SearchPage extends StatelessWidget {
   String? cityName;
 
-  SearchPage({super.key});
+  SearchPage(this.updateUi);
   VoidCallback? updateUi;
   @override
   Widget build(BuildContext context) {
@@ -32,16 +32,10 @@ class SearchPage extends StatelessWidget {
                   cityName = value;
                 },
                 onSubmitted: (String data) async {
-                  cityName = data;
-                  WeatherService service = WeatherService();
-
-                  WeatherModel? weather = await service.getWeather(
-                    cityName: cityName!,
-                  );
-                  Provider.of<WeatherProvider>(context, listen: false)
-                      .weatherData = weather;
-                  // updateUi!();
-                  Navigator.pop(context);
+                  if (data.isNotEmpty) {
+                    cityName = data;
+                    await _searchWeather(context, cityName!);
+                  }
                 },
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
@@ -60,17 +54,12 @@ class SearchPage extends StatelessWidget {
                   hintText: "Enter City Name",
                   focusColor: Color(0xffFFAD3B),
 
-                  suffixIcon: GestureDetector(
+                  suffixIcon: InkWell(
                     onTap: () async {
                       WeatherService service = WeatherService();
-
-                      WeatherModel? weather = await service.getWeather(
-                        cityName: cityName!,
-                      );
-                      Provider.of<WeatherProvider>(context, listen: false)
-                          .weatherData = weather;
-                      // updateUi!();
-                      Navigator.pop(context);
+                      if (cityName != null && cityName!.isNotEmpty) {
+                        await _searchWeather(context, cityName!);
+                      }
                     },
                     child: Icon(Icons.search),
                   ),
@@ -82,5 +71,28 @@ class SearchPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _searchWeather(BuildContext context, String city) async {
+    try {
+      WeatherService service = WeatherService();
+      WeatherModel? weather = await service.getWeather(cityName: city);
+
+      if (weather != null) {
+        Provider.of<WeatherProvider>(context, listen: false).weatherData =
+            weather;
+        Navigator.pop(context);
+      } else {
+        // Show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Could not find weather data for $city')),
+        );
+      }
+    } catch (e) {
+      print('Error searching weather: $e');
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error occurred while searching')));
+    }
   }
 }

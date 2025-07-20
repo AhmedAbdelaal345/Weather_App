@@ -26,11 +26,8 @@ class MyApp extends StatelessWidget {
         primarySwatch:
             Provider.of<WeatherProvider>(context).weatherData == null
                 ? Colors.blue
-                : Provider.of<WeatherProvider>(
-                  context,
-                ).weatherData!.getThemeData(),
+                : Provider.of<WeatherProvider>(context).weatherData!.getThemeData(),
       ),
-
       home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
