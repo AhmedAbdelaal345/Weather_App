@@ -16,4 +16,13 @@ class WeatherCubit extends Cubit<WeatherState> {
       emit(FailureState());
     }
   }
+  void getWeatherByLocation() async {
+    emit(LoadingState());
+    weatherModel = await service.getWeatherByLocation();
+    try {
+      emit(SucessState());
+    } on Exception catch (e) {
+      emit(FailureState());
+    }
+  }
 }

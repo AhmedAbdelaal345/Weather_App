@@ -30,9 +30,7 @@ class SearchPage extends StatelessWidget {
             children: [
               TextField(
                 enableSuggestions: true,
-                onChanged: (value) {
-                  cityName = value;
-                },
+
                 onSubmitted: (String data) async {
                   if (data.isNotEmpty) {
                     cityName = data;
@@ -58,7 +56,6 @@ class SearchPage extends StatelessWidget {
 
                   suffixIcon: InkWell(
                     onTap: () async {
-                      WeatherService service = WeatherService();
                       if (cityName != null && cityName!.isNotEmpty) {
                         await _searchWeather(context, cityName!);
                       }
@@ -82,9 +79,10 @@ class SearchPage extends StatelessWidget {
 
       if (weather != null) {
         BlocProvider.of<WeatherCubit>(context).getWeather(cityName: city);
-        Navigator.pop(context);
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
       } else {
-        // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Could not find weather data for $city')),
         );
