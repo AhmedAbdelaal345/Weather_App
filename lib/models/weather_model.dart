@@ -44,13 +44,13 @@ class WeatherModel {
     print("Weather State: $weatherState"); // Debugging line
     if (weatherState.trim().toLowerCase() == "cloudy" ||
         weatherState.trim().toLowerCase() == "overcast" ||
-        weatherState.trim().toLowerCase() == "mist") {
+        weatherState.trim().toLowerCase() == "mist" ||
+        weatherState.trim().toLowerCase() == "partly cloudy") {
       return "assets/images/cloudy.png";
     } else if (weatherState.trim().toLowerCase() ==
         "thundery outbreaks possible") {
       return "assets/images/thunderstorm.png";
-    } else if (weatherState.trim().toLowerCase() == "sunny" ||
-        weatherState.trim().toLowerCase() == "partly cloudy") {
+    } else if (weatherState.trim().toLowerCase() == "sunny") {
       return "assets/images/clear.png";
     } else if (weatherState.trim().toLowerCase() == "light rain" ||
         weatherState.trim().toLowerCase() == "patchy rain nearby" ||
@@ -68,13 +68,13 @@ class WeatherModel {
     print("Weather State: $weatherState"); // Debugging line
     if (weatherState.trim().toLowerCase() == "cloudy" ||
         weatherState.trim().toLowerCase() == "overcast" ||
-        weatherState.trim().toLowerCase() == "mist") {
+        weatherState.trim().toLowerCase() == "mist" ||
+        weatherState.trim().toLowerCase() == "partly cloudy") {
       return Colors.blueGrey;
     } else if (weatherState.trim().toLowerCase() ==
         "thundery outbreaks possible") {
       return Colors.yellow;
-    } else if (weatherState.trim().toLowerCase() == "sunny" ||
-        weatherState.trim().toLowerCase() == "partly cloudy") {
+    } else if (weatherState.trim().toLowerCase() == "sunny") {
       return Colors.orange;
     } else if (weatherState.trim().toLowerCase() == "light rain" ||
         weatherState.trim().toLowerCase() == "patchy rain nearby" ||
